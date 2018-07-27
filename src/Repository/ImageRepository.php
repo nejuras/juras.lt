@@ -45,6 +45,27 @@ class ImageRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult()
         ;
+    return $this->createQueryBuilder('p')
+        // p.category refers to the "category" property on product
+        ->innerJoin('p.category', 'c')
+        // selects all the category data to avoid the query
+        ->addSelect('c')
+        ->andWhere('p.id = :id')
+        ->setParameter('id', $productId)
+        ->getQuery()
+        ->getOneOrNullResult();
     }
     */
+    public function findOneByIdJoinedToCategory($s)
+    {
+        $qb = $this->createQueryBuilder('event')
+            ->innerJoin('event.eventName', 'c')
+            ->addSelect('c')
+            ->andWhere('event.id = :eventId')
+            ->setParameter('eventName', $s)
+            ->orderBy('c.id', 'ASC')
+            ->getQuery();
+
+        return $qb->execute();
+    }
 }

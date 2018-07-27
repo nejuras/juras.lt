@@ -18,7 +18,7 @@ class ImageType extends AbstractType
             ->add('image', FileType::class,
                 [
                     'label' => 'Upload Image',
-                    
+                    'multiple' => true,
                 ]);
     }
 

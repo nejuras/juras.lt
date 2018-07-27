@@ -47,4 +47,19 @@ class EventRepository extends ServiceEntityRepository
         ;
     }
     */
+//    public function findOneByIdJoinedToCategory($s)
+//    {
+//        $qb = $this->createQueryBuilder('p')
+//            ->andWhere('p.eventName > :eventName')
+//            ->setParameter('eventName', $s)
+//            ->orderBy('p.eventName', 'ASC')
+//            ->getQuery();
+//
+//        return $qb->execute();
+//    }
+    public function findAllEvents()
+    {
+        return $this->createQueryBuilder('evnt')
+        ->orderBy('evnt.eventName', 'DESC');
+    }
 }

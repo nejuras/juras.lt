@@ -9,11 +9,13 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Adding a new product</h1>
+    <h1>Adding a New Image</h1>
 
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-
-    {{ form_row(form.images) }}
+    {#{{ form_label(form.images, 'Your name', {#}
+        {#'label_attr': {'class': 'CUSTOM_LABEL_CLASS'}#}
+    {#}) }}#}
+    {{ form_row(form.images, {'label' : false}) }}
     {{ form_end(form) }}
 </div>
 {% endblock %}

@@ -19,6 +19,7 @@ class ImageController extends Controller
      */
     public function index(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
         $event = new Event();
 
         $event->addImage(new Image());
@@ -28,47 +29,27 @@ class ImageController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             // $file stores the uploaded PDF file
-//            /** @var $file UploadedFile */
-//            $file = $image->getImage();
-            /**
-             * @var $event Event
-             */
-//            $event = $form->getData();
-//            $files = $form->get('images')->getData();
-//            $image->setImage('dsc_88888.jpg');
-//            echo '<br>';
-//            print_r($event->getImages());
-//            $files = $event->getEventName();
-////            $image = new Image($event);
-//            var_dump($files);
-//            echo '<br>';
-//            echo '<br>';
-//            echo '<br>';
-//            foreach ($files as $file) {
-//
-////    var_dump($file->getImage());
-//                $at = $file->getImage();
-////                $at->guessExtension();
-//                var_dump($at);
-//                echo '<br>';
-//                echo '<br>';
-//                echo '<br>';
+            /** @var $file UploadedFile */
+
+            $files = $event->getImages();
+            $newDir = $event->eventNameConverterToDir($event->getEventName());
 
 
-//            $files = $event->getImages());
-//            var_dump($event);
-//            var_dump($files);
-//            foreach ($files as $file) {
-//                $newDir = $event->getEventName();
-//                $newImageName = $this->generateUniqueFileName() . '.' . $files->guessExtension();
-//                $this->resize_image($files, 1000, 1000, false, $newImageName, $newDir);
+            foreach ($files as $file) {
+                $uploadedFile = $file->getImage();
+                foreach ($uploadedFile as $filed) {
+                    $newImageName = $this->generateUniqueFileName() . '.' . $filed->guessExtension();
+                    $this->resize_image($filed, 1000, 1000, false, $newImageName, $newDir);
 
-//                $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
+                    $file->setImage($newImageName);
+                    $em->merge($file);
+                }
 
-            var_dump($event);
+            }
+            $em->persist($event);
+            $em->flush();
 
-
-                // moves the file to the directory where brochures are stored
+            // moves the file to the directory where brochures are stored
 //                if (!is_dir('uploads/images/' . $createDir)) {
 //                    mkdir('uploads/images/' . $createDir, 0700);
 //                }
@@ -77,14 +58,11 @@ class ImageController extends Controller
 //                    $fileName
 //                );
 
-                // updates the 'brochure' property to store the PDF file name
-                // instead of its contents
+            // updates the 'brochure' property to store the PDF file name
+            // instead of its contents
 //                $entityManager = $this->getDoctrine()->getManager();
 //                $entityManager->persist($event);
 //                $entityManager->flush();
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($event);
-                $em->flush();
 
 
 //            }

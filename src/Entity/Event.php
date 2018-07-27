@@ -29,6 +29,8 @@ class Event
      */
     private $images;
 
+//    private $events;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -60,6 +62,18 @@ class Event
         return $this;
     }
 
+//    public function getEvents(): ?string
+//    {
+//        return $this->eventName;
+//    }
+//
+//    public function setEvents(string $events): self
+//    {
+//        $this->eventName = $events;
+//
+//        return $this;
+//    }
+
 //    /**
 //     * @return Collection|Image[]
 //     */
@@ -82,6 +96,13 @@ class Event
             $img->setEventId($this);
         }
     }
+//    public function addup(UploadedFile $img): void
+//    {
+////        $this->images[] = $img;
+//        if (!$this->images->contains($img)) {
+//            $this->images->add($img);
+//        }
+//    }
 //    public function removeGift(Gift $gift): void
 //    {
 //        if ($this->gifts->contains($gift)) {
@@ -89,4 +110,14 @@ class Event
 //            $gift->setGiftList(null);
 //        }
 //    }
+
+    public function eventNameConverterToDir($string)
+    {
+        $words = explode(" ", $string);
+        $letters = "";
+        foreach ($words as $value) {
+            $letters .= substr($value, 0, 1);
+        }
+        return $letters;
+    }
 }

@@ -4,11 +4,30 @@
 
 {% block body %}
     {{ parent() }}
+
+    {% set headerimage = "" %}
+    {% for datas in event.images|slice(5, 1) %}
+        {% set headerimage = datas.image %}
+    {% endfor %}
+
+    <style>
+        .masthead {
+            position: relative;
+            width: 100%;
+            height: auto;
+            min-height: 35rem;
+            padding: 15rem 0;
+            background: linear-gradient(to bottom, rgba(22, 22, 22, 0.1) 0%, rgba(22, 22, 22, 0.5) 75%, #161616 100%), url({{ data.url }}{{ headerimage }});
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: scroll;
+            background-size: cover;
+        }</style>
     <!-- Header -->
     <header class="masthead">
         <div class="container d-flex h-100 align-items-center">
             <div class="mx-auto text-center">
-                <h1 class="mx-auto my-0 text-uppercase">G&D vestuvės</h1>
+                <h1 class="mx-auto my-0 text-uppercase">{{ event.eventName }}</h1>
                 <h2 class="text-white-50 mx-auto mt-2 mb-5">A free, responsive, one page Bootstrap theme created by
                     Start Bootstrap.</h2>
                 <a href="#projects" class="btn btn-primary js-scroll-trigger">Get Started</a>
@@ -19,9 +38,9 @@
     <section id="projects" class="projects-section bg-light">
         <div id="liveDemo" class="justified-gallery col-sm-12 col-lg-8 mx-auto"
              style="padding-left: 0px; padding-right: 0px;">
-            {% for datas in data %}
-                <a href="/uploads/images/{{ datas.pavadinimas }}/{{ datas.imageName }}" title="G&D">
-                    <img src="/uploads/images/{{ datas.pavadinimas }}/{{ datas.imageName }}" alt="">
+            {% for datas in event.images %}
+                <a href="{{ data.url}}{{ datas.image }}" title="G&D">
+                    <img src="{{ data.url}}{{ datas.image }}" alt="G&D">
                 </a>
             {% endfor %}
         </div>
