@@ -18,8 +18,7 @@ Encore
     .addStyleEntry('css/app', './assets/css/app.scss')
     .addStyleEntry('css/grayscale', './assets/css/grayscale.scss')
 
-    .addEntry('img', glob.sync('./assets/img/*'))
-
+    .addEntry('img/', glob.sync('./assets/img/*'))
     // uncomment if you use Sass/SCSS files
     .enableSassLoader()
 

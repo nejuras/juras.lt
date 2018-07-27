@@ -1,7 +1,7 @@
 //add bootstrap
-// require('bootstrap');
-// require('justifiedGallery/dist/css/justifiedGallery.css');
-// require('justifiedGallery/dist/js/jquery.justifiedGallery');
+ require('bootstrap');
+ require('justifiedGallery/dist/css/justifiedGallery.css');
+ require('justifiedGallery/dist/js/jquery.justifiedGallery');
 //  require('justifiedGallery/dist/js/jquery.justifiedGallery');
 //
 // workaround for (possible) webpack bug to prevent error from UglifyJs 'Unexpected token: name (self) [js/app.2b7036a4c723ac53590a.js:12552,12]'
