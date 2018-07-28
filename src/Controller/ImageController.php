@@ -6,7 +6,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
-//use Symfony\Component\Filesystem\;
 use App\Entity\Image;
 use App\Entity\Event;
 use App\Form\ImageType;
@@ -34,42 +33,18 @@ class ImageController extends Controller
             $files = $event->getImages();
             $newDir = $event->eventNameConverterToDir($event->getEventName());
 
-
             foreach ($files as $file) {
                 $uploadedFile = $file->getImage();
                 foreach ($uploadedFile as $filed) {
                     $newImageName = $this->generateUniqueFileName() . '.' . $filed->guessExtension();
                     $this->resize_image($filed, 1000, 1000, false, $newImageName, $newDir);
-
                     $file->setImage($newImageName);
                     $em->merge($file);
                 }
-
             }
             $em->persist($event);
             $em->flush();
-
-            // moves the file to the directory where brochures are stored
-//                if (!is_dir('uploads/images/' . $createDir)) {
-//                    mkdir('uploads/images/' . $createDir, 0700);
-//                }
-//                $file->move(
-//                    $this->getParameter('image_directory') . '/' . $createDir,
-//                    $fileName
-//                );
-
-            // updates the 'brochure' property to store the PDF file name
-            // instead of its contents
-//                $entityManager = $this->getDoctrine()->getManager();
-//                $entityManager->persist($event);
-//                $entityManager->flush();
-
-
-//            }
         }
-
-//      }      return $this->redirect($this->generateUrl('app_product_list'));
-//        }
         return $this->render('image/index.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -104,7 +79,6 @@ class ImageController extends Controller
             }
         }
         $imagePath = $this->getParameter('image_directory') . '/' . $dir . '/' . $image;
-//        $imagePath = $this->getParameter('image_directory') . '/' . $dir . '/' . $this->generateUniqueFileName() . image_type_to_extension(IMAGETYPE_JPEG);
 
         $src = imagecreatefromjpeg($file);
         $dst = imagecreatetruecolor($newwidth, $newheight);
